@@ -11,6 +11,8 @@ echo CONTEXT=$CONTEXT
 if [[ -n "$DEPLOY_URL" && "${DEPLOY_URL/netlify//}" != "$DEPLOY_URL" ]]; then
   CI=netlify
   rvm use ruby 2.2.3
+  echo PULL_REQUEST=$PULL_REQUEST >> .env
+  echo COMMIT_REF=$COMMIT_REF >> .env
 fi
 
 # Netlify builds are deploys which can be previewed,
