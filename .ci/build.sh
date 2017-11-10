@@ -8,6 +8,10 @@ echo PULL_REQUEST=$PULL_REQUEST
 echo COMMIT_REF=$COMMIT_REF
 echo CONTEXT=$CONTEXT
 
+if [[ -n "$DEPLOY_URL" && "${DEPLOY_URL/netlify//}" != "$DEPLOY_URL" ]]; then
+  rvm use ruby 2.2.3
+fi
+
 if [[ -n "$PULL_REQUEST" && "$PULL_REQUEST" != "false" ]]; then
   echo PULL_REQUEST is $PULL_REQUEST
 else
