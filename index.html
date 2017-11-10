@@ -6,7 +6,7 @@
 <head>
   <title>{{ site.title }}
   {% if jekyll.environment != "production" %}
-    - Development deploy preview {{ site.env.PULL_REQUEST }} @ {{ site.env.COMMIT_REF }}
+    - Development deploy preview {{ site.netlify.pull_request }} @ {{ site.netlify.commit }}
   {% endif %}
   </title>
   <meta charset="utf-8">
