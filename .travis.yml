@@ -24,7 +24,6 @@ jobs:
           if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
             sed -i.bak '/bears = GitCommitBear/d' .coafile
           fi
-        - docker run -v=$(pwd):/app --workdir=/app coala/base coala --ci
 
 install: true
 
