@@ -5,6 +5,22 @@ rvm:
   - 2.3.3
 cache: bundler
 
+env:
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true  # Speeds installation of html-proofer
+  matrix:
+
+jobs:
+  include:
+    - stage: moban
+      language: python
+      python: 3.6
+      rvm: false
+      services: false
+      cache: pip
+      install: pip install moban
+      script: .ci/check_moban.sh
+
 # Assume bundler is being used, therefore
 # the `install` step will run `bundle install` by default.
 script:
@@ -20,10 +36,6 @@ notifications:
   email: false
   webhooks: https://www.travisbuddy.com/
   on_success: never
-
-env:
-  global:
-    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true  # Speeds installation of html-proofer
 
 # Route your build to the container-based infrastructure for a faster build
 sudo: false
