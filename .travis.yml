@@ -1,4 +1,5 @@
-services: docker
+# Route your build to the container-based infrastructure for a faster build
+sudo: false
 
 language: ruby
 rvm:
@@ -37,6 +38,3 @@ notifications:
   email: false
   webhooks: https://www.travisbuddy.com/
   on_success: never
-
-# Route your build to the container-based infrastructure for a faster build
-sudo: false
