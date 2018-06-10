@@ -9,6 +9,7 @@ env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true  # Speeds installation of html-proofer
   matrix:
+    - RUBY=true
 
 jobs:
   include:
@@ -16,7 +17,6 @@ jobs:
       language: python
       python: 3.6
       rvm: false
-      services: false
       env:
       cache: pip
       install: pip install moban
