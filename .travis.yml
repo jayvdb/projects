@@ -19,17 +19,22 @@ jobs:
       cache: pip
       install: pip install moban
       script: .ci/check_moban.sh
+    - stage: coala
+      language: python
+      python: 3.6
+      rvm: false
+      script:
+        - >
+          if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
+            sed -i.bak '/bears = GitCommitBear/d' .coafile
+          fi
+        - docker run -v=$(pwd):/app --workdir=/app coala/base coala --ci
 
 # Assume bundler is being used, therefore
 # the `install` step will run `bundle install` by default.
 script:
   - .ci/build.sh
   # https://github.com/coala/coala-bears/issues/1037
-  - >
-    if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
-      sed -i.bak '/bears = GitCommitBear/d' .coafile
-    fi
-  - docker run -v=$(pwd):/app --workdir=/app coala/base coala --ci
 
 notifications:
   email: false
