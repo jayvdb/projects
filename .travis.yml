@@ -26,6 +26,8 @@ jobs:
           fi
         - docker run -v=$(pwd):/app --workdir=/app coala/base coala --ci
 
+install: true
+
 before_install:
   - export NOKOGIRI_USE_SYSTEM_LIBRARIES=true  # Speeds installation of html-proofer
 
@@ -34,6 +36,8 @@ before_install:
 script:
   - .ci/build.sh
   # https://github.com/coala/coala-bears/issues/1037
+
+after_success: true
 
 notifications:
   email: false
