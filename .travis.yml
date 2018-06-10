@@ -2,11 +2,6 @@ language: ruby
 cache: bundler
 
 env:
-  global:
-    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true  # Speeds installation of html-proofer
-  matrix:
-    - RUBY=true
-
 jobs:
   include:
     - stage: moban
@@ -27,6 +22,9 @@ jobs:
             sed -i.bak '/bears = GitCommitBear/d' .coafile
           fi
         - docker run -v=$(pwd):/app --workdir=/app coala/base coala --ci
+
+before_install:
+  - export NOKOGIRI_USE_SYSTEM_LIBRARIES=true  # Speeds installation of html-proofer
 
 # Assume bundler is being used, therefore
 # the `install` step will run `bundle install` by default.
