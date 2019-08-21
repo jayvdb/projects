@@ -70,7 +70,7 @@ before_install:
     if [ -z "$TRAVIS_PYTHON_VERSION" ]; then
       set -x;
       if [ "$TRAVIS_OS_NAME" == osx ]; then
-        true;
+        brew install pkg-config;
       elif [ "$TRAVIS_OS_NAME" == windows ]; then
         choco install python 3.6;
       else
