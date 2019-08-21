@@ -68,7 +68,7 @@ before_install:
   - echo $PKG_CONFIG_PATH
   # /usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig
   - pkg-config --cflags --libs libxml-2.0
-  - sed -i '/^ruby /d' Gemfile
+  - sed -i.bak '/^ruby /d' Gemfile
   - pwd
 
 before_script:
@@ -86,7 +86,7 @@ before_script:
         choco install python 3.6;
       else
         echo "$PYENV_ROOT";
-        cd /opt/pyenv/ && git pull && cd -;
+        cd /opt/pyenv/ && git pull && cd $TRAVIS_BUILD_DIR;
         pyenv install 3.6.3 && pyenv global 3.6.3;
       fi
       hash -r;
