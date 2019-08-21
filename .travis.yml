@@ -52,6 +52,7 @@ stage: test
 
 env:
   global:
+    - COALA_ZIP_URL=https://codeload.github.com/coala/coala/zip
     - BEARS_ZIP_URL=https://codeload.github.com/coala/coala-bears/zip
     # Speeds installation of html-proofer
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
@@ -121,6 +122,8 @@ before_script:
 script:
   - pwd
   - .ci/build.sh
+  - curl -fsSL -o coala.zip $COALA_ZIP_URL/master
+  - pip install coala.zip
   - curl -fsSL -o coala-bears.zip $BEARS_ZIP_URL/master
   - pip install coala-bears.zip[alldeps]
   - coala --non-interactive
