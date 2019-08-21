@@ -10,7 +10,6 @@ build_script: .ci/build.sh
 travis_os:
   - linux
   - osx
-  - windows
 
 requires:
   - https://gitlab.com/coala/mobans
