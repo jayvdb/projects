@@ -5,11 +5,14 @@ gitignore_language: Jekyll
 gitignore_extra_rulesets:
   - GitBook
 
+requires:
+  - https://gitlab.com/coala/mobans
+
 configuration:
   template_dir:
-    - ../coala-mobans/templates/
-    - ../coala-mobans/assets/
+    - 'mobans:templates/'
+    - 'mobans:assets/'
   configuration: .moban.yaml
-  configuration_dir: ../coala-mobans/
+  configuration_dir: 'mobans:'
 targets:
   - .gitignore: coala-gitignore.jj2
