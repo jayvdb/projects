@@ -1,9 +1,12 @@
 overrides: coala.yaml
 
 language: ruby
+language_versions:
+  - 2.5.1
 gitignore_language: Jekyll
 gitignore_extra_rulesets:
   - GitBook
+build_script: .ci/build.sh
 
 requires:
   - https://gitlab.com/coala/mobans
@@ -16,3 +19,4 @@ configuration:
   configuration_dir: 'mobans:'
 targets:
   - .gitignore: coala-gitignore.jj2
+  - .travis.yml: ci/coala-travis.yml.jj2

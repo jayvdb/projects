@@ -1,47 +1,88 @@
-services: docker
-
+sudo: false
+dist: xenial
 language: ruby
+notifications:
+  email: false
 rvm:
   - 2.5.1
-cache: bundler
+
+stages:
+  - test
+  - moban
 
 .disable_global: &disable_global
-  rvm: false
+  addons: false
   cache: false
+  env: {}
+  python: false
   before_install: false
   install: false
+  before_script: false
   script: false
+  after_success: false
+  after_failure: false
+  before_deploy: false
+  deploy: false
 
-env:
+.moban: &moban
+  <<: *disable_global
+  python: 3.6
+  stage: moban
+  install: pip install moban>=0.0.4
+  script:
+    - moban
+    - git diff --exit-code
+
 jobs:
   include:
     - stage: moban
-      <<: *disable_global
-      language: python
-      python: 3.6
-      cache: pip
-      install: pip install moban
-      script: .ci/check_moban.sh
+      <<: *moban
+      if: branch = master AND type = push
+    - *moban
+  allow_failures:
+    - *moban
+
+stage: test
+
+env:
+  global:
+    - BEARS_ZIP_URL=https://codeload.github.com/coala/coala-bears/zip
+    # Speeds installation of html-proofer
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
+    - JDK="adopt@1.8.212-04"
+
+cache:
+  pip: true
+  directories:
+    - ~/nltk_data
+    - ~/.jabba
 
 before_install:
-  # Speeds installation of html-proofer
-  - export NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+  - curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
 
-# Assume bundler is being used, therefore
-# the `install` step will run `bundle install` by default.
+  # See rationale in .ci/deps.python-packages.ps1 for pre-installing these
+  - pip install --prefer-binary cffi lxml
+  # Use pip 9, so that setuptools can be downgraded.
+  # https://github.com/coala/coala/issues/4708
+  # Apart from builds with python 2.7 and 3.5, it installs setuptools
+  # twice. So, it is required to uninstall one version manually.
+  - pip uninstall setuptools --yes
+  - pip uninstall setuptools --yes || true
+  - pip uninstall setuptools --yes || true
+  - pip uninstall pipenv --yes || true
+  - pip install pip==9.0.1 setuptools==21.2.2
+  - source ~/.install-jdk-travis.sh
+
+before_script:
+  - true
+
 script:
   - .ci/build.sh
-  # https://github.com/coala/coala-bears/issues/1037
-  - >
-    if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
-      sed -i.bak '/bears = GitCommitBear/d' .coafile
-    fi
-  - docker run -v=$(pwd):/app --workdir=/app coala/base coala --ci
+  - curl -fsSL -o coala-bears.zip $BEARS_ZIP_URL/master
+  - pip install coala-bears.zip[alldeps]
+  - coala --non-interactive
 
-notifications:
-  email: false
-  webhooks: https://www.travisbuddy.com/
-  on_success: never
-
-# Route your build to the container-based infrastructure for a faster build
-sudo: false
+branches:
+  exclude:
+    - /^sils\//
