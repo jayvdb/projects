@@ -62,6 +62,21 @@ cache:
 before_install:
   - curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
 
+  - >
+    if [ -z "$TRAVIS_PYTHON_VERSION" ]; then
+      set -x -e;
+      if [ "$TRAVIS_OS_NAME" == osx ]; then
+        brew install python3;
+      elif [ "$TRAVIS_OS_NAME" == windows ]; then
+        choco install python 3.6;
+      else
+        pyenv install 3.6.6 && pyenv global 3.6.6;
+      fi
+      hash -r;
+      sudo ln -sf $(which python3) $(which python);
+      sudo ln -sf $(which pip3) $(which pip 2>/dev/null || echo /usr/bin/pip);
+    fi
+
   # See rationale in .ci/deps.python-packages.ps1 for pre-installing these
   - pip install --prefer-binary cffi lxml
   # Use pip 9, so that setuptools can be downgraded.
