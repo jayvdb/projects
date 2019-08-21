@@ -5,7 +5,7 @@ notifications:
   email: false
 rvm:
   - 2.4.3
-  - 2.5.1
+  # 2.5.1
   - 2.6
 
 stages:
@@ -69,9 +69,12 @@ before_install:
   # /usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig
   - pkg-config --cflags --libs libxml-2.0
   - sed -i '/^ruby /d' Gemfile
+  - pwd
 
 before_script:
+  - pwd
   - curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
+  - pwd
 
   #brew install python3;
   - >
@@ -93,6 +96,7 @@ before_script:
       set -e;
     fi
 
+  - pwd
   # See rationale in .ci/deps.python-packages.ps1 for pre-installing these
   - pip install --prefer-binary cffi lxml
   # Use pip 9, so that setuptools can be downgraded.
@@ -109,8 +113,10 @@ before_script:
   - which bundle
   - gem install bundler
   - which bundle
+  - pwd
 
 script:
+  - pwd
   - .ci/build.sh
   - curl -fsSL -o coala-bears.zip $BEARS_ZIP_URL/master
   - pip install coala-bears.zip[alldeps]
