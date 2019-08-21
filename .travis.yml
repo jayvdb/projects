@@ -68,7 +68,7 @@ before_install:
   #brew install python3;
   - >
     if [ -z "$TRAVIS_PYTHON_VERSION" ]; then
-      set -x;
+      set -e;
       if [ "$TRAVIS_OS_NAME" == osx ]; then
         brew install pkg-config libxml2;
       elif [ "$TRAVIS_OS_NAME" == windows ]; then
@@ -98,6 +98,10 @@ before_install:
   - pip uninstall pipenv --yes || true
   - pip install pip==9.0.1 setuptools==21.2.2
   - source ~/.install-jdk-travis.sh
+
+  - which bundle
+  - gem install bundler
+  - which bundle
 
 before_script:
   - true
