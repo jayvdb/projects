@@ -68,6 +68,7 @@ before_install:
   - echo $PKG_CONFIG_PATH
   # /usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig
   - pkg-config --cflags --libs libxml-2.0
+  - sed -i '/^ruby /d' Gemfile
 
 before_script:
   - curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
