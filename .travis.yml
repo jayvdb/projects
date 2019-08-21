@@ -83,7 +83,7 @@ before_install:
       sudo ln -sf $(which python3) $(which python);
       sudo ln -sf $(which pip3) $(which pip 2>/dev/null || echo /usr/bin/pip);
       pip install --upgrade pip;
-      set -x;
+      set -e;
     fi
 
   # See rationale in .ci/deps.python-packages.ps1 for pre-installing these
