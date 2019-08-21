@@ -3,6 +3,7 @@ overrides: coala.yaml
 language: ruby
 language_versions:
   - 2.5.1
+  - 2.6.3
 gitignore_language: Jekyll
 gitignore_extra_rulesets:
   - GitBook
