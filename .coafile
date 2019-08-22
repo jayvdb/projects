@@ -27,7 +27,14 @@ shortlog_regex = ([^:]*|[^:]+[^ ]: [A-Z0-9*].*)
 [linecount]
 files = **.yml, **.html, **.md, **.js
 bears = LineCountBear
-ignore = vendor/**, resources/vendors/**, data/projects.js, _site/**
+ignore =
+  vendor/**,
+  resources/vendors/**,
+  data/projects.js,
+  _site/**,
+  _projects/README.md,
+  data/locale/en/projects/README.md,
+# README.md symlinks: https://github.com/coala/coala-bears/issues/2950
 max_lines_per_file = 500
 
 [filenames]
