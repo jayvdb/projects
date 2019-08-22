@@ -13,6 +13,10 @@ travis_os:
 
 requires:
   - https://gitlab.com/coala/mobans
+  - https://github.com/coala/coala
+  - type: git
+    url: https://github.com/jayvdb/coala-bears
+    branch: htmllint-use-spaces-default
 
 configuration:
   template_dir:
