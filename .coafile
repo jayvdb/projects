@@ -12,6 +12,7 @@ link_ignore_list =
   https://satwikkansal.xyz/**,
   https://gitmate.io/**,
   http://gitmate.io/**,
+  https://asciinema.org/a/0poVbHE7lqehV4islFo6cptjb/,
 # clbin.com doesnt work in link_ignore_list
 # See https://github.com/coala/coala-bears/issues/2126
 link_ignore_regex = clbin.com
