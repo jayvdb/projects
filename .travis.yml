@@ -90,6 +90,7 @@ before_script:
         choco install python 3.6;
       else
         echo "$PYENV_ROOT";
+        pyenv versions;
         cd "$PYENV_ROOT" && git checkout master && git pull;
         pyenv install 3.6.3 && pyenv global 3.6.3;
         cd $TRAVIS_BUILD_DIR;
